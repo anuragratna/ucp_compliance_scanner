@@ -1,0 +1,12 @@
+[project]
+name = "ucp-compliance-scanner"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12.0"
+dependencies = [
+    "flask>=3.1.2",
+    "gunicorn>=25.0.1",
+    "playwright>=1.58.0",
+    "requests>=2.32.5",
+]

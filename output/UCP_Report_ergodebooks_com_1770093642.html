@@ -1,0 +1,443 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>UCP Compliance Report - ergodebooks.com</title>
+  
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        
+        :root {
+            --primary: #2563eb;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --bg-body: #f3f4f6;
+            --bg-card: #ffffff;
+            --border: #e5e7eb;
+        }
+
+        @page { margin: 0; size: A4; }
+        
+        * { box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            -webkit-print-color-adjust: exact;
+        }
+        
+        .container {
+            max-width: 210mm;
+            margin: 0 auto;
+            background: white;
+            min-height: 297mm;
+            padding: 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-hero {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: white;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-bg-pattern {
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            opacity: 0.1;
+            background-image: radial-gradient(#6366f1 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .report-header {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .brand-title h1 {
+            font-size: 28px;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: -0.5px;
+        }
+        
+        .brand-title span { color: #60a5fa; }
+        .report-meta { font-size: 13px; color: #94a3b8; margin-top: 8px; }
+
+        .status-pill {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(4px);
+            padding: 8px 16px;
+            border-radius: 99px;
+            font-weight: 600;
+            font-size: 13px;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #f59e0b;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .status-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background-color: #f59e0b;
+            box-shadow: 0 0 8px #f59e0b;
+        }
+
+        .content-body { padding: 40px; }
+
+        .executive-section {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+            background: #fff;
+            padding-bottom: 40px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .gauge-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .gauge-fill {
+            transition: stroke-dashoffset 1s ease-out;
+        }
+
+        .summary-text h2 {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0 0 12px 0;
+            color: var(--text-main);
+        }
+        
+        .summary-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+        
+        .metric-item {
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .metric-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: #64748b;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .metric-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #64748b;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .component-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .card-header {
+            padding: 16px 20px;
+            background: #f8fafc;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .card-title-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .card-title {
+            font-size: 15px;
+            font-weight: 700;
+            margin: 0;
+            color: #1e293b;
+        }
+        
+        .card-subtitle {
+            font-size: 13px;
+            color: #64748b;
+            margin-top: 2px;
+        }
+
+        .score-badge {
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        .card-body { padding: 20px; }
+        
+        .detail-row {
+            font-size: 13px;
+            color: #334155;
+            margin-bottom: 12px;
+        }
+        
+        .detail-label { font-weight: 600; color: #64748b; margin-right: 6px; }
+
+        .recommendation {
+            background: #ffffff;
+            border: 1px solid #fbbf24;
+            border-left-width: 4px;
+            border-radius: 6px;
+            padding: 16px;
+            margin-top: 16px;
+        }
+        
+        .rec-title {
+            color: #d97706;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        
+        .recommendation p {
+            font-size: 13px;
+            margin: 0 0 8px 0;
+            color: #4b5563;
+        }
+
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 12px;
+            border-radius: 6px;
+            font-family: 'Monaco', monospace;
+            font-size: 12px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+
+        .footer {
+            padding: 40px;
+            background: #f8fafc;
+            border-top: 1px solid var(--border);
+            font-size: 12px;
+            color: #94a3b8;
+        }
+        
+        .disclaimer-box {
+            margin-bottom: 20px;
+        }
+        
+        .disclaimer-title {
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            color: #64748b;
+        }
+        
+        .disclaimer-text {
+            margin-bottom: 6px;
+            line-height: 1.5;
+        }
+        
+        .footer-meta {
+            border-top: 1px solid #e2e8f0;
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+    
+</head>
+<body>
+  <div class="container">
+      <div class="header-hero">
+          <div class="header-bg-pattern"></div>
+          <div class="report-header">
+              <div class="brand-title">
+                  <h1>UCP <span>SCANNER</span></h1>
+                  <div class="report-meta">Universal Content Protocol Assessment</div>
+              </div>
+              <div class="status-pill">
+                  <div class="status-dot"></div>
+                  PARTIAL
+              </div>
+          </div>
+      </div>
+      
+      <div class="content-body">
+          <div class="executive-section">
+              <div class="gauge-container">
+                  
+        <svg viewBox="0 0 200 110" class="gauge">
+            <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#e5e7eb" stroke-width="20" stroke-linecap="round"/>
+            <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#f59e0b" stroke-width="20" stroke-linecap="round" 
+                  stroke-dasharray="251.3272" stroke-dashoffset="125.6636" class="gauge-fill"/>
+            <text x="100" y="85" text-anchor="middle" font-size="36" font-weight="bold" fill="#1f2937">50</text>
+            <text x="100" y="105" text-anchor="middle" font-size="12" fill="#6b7280" font-weight="600">SCORE</text>
+        </svg>
+        
+              </div>
+              <div class="summary-text">
+                  <h2>Executive Summary</h2>
+                  <p class="summary-desc">
+                      This assessment evaluates <strong>ergodebooks.com</strong> against the Universal Content Protocol (UCP) standards. 
+                      The site currently has a readiness score of <strong>50/100</strong>.
+                  </p>
+                  
+                  <div class="metrics-grid">
+                      <div class="metric-item">
+                          <div class="metric-label">Review Date</div>
+                          <div class="metric-value">February 03, 2026 • 04:40 UTC</div>
+                      </div>
+                      <div class="metric-item">
+                          <div class="metric-label">Target Host</div>
+                          <div class="metric-value">ergodebooks.com</div>
+                      </div>
+                      <div class="metric-item">
+                          <div class="metric-label">Protocol Ver</div>
+                          <div class="metric-value">v1.0</div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <div class="component-section">
+              <h3 class="section-title">Technical Breakdown</h3>
+              
+        <div class="component-card">
+            <div class="card-header">
+                <div class="card-title-group">
+                    <div class="icon-box">
+                        <svg class="w-6 h-6 text-red-500" fill="none" stroke="#ef4444" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </div>
+                    <div>
+                        <h3 class="card-title">Robots.txt UCP directive</h3>
+                        <div class="card-subtitle">No UCP directive in robots.txt</div>
+                    </div>
+                </div>
+                <div class="score-badge" style="background-color: #ef444415; color: #ef4444;">
+                    0 / 20 pts
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="detail-row">
+                    <span class="detail-label">Endpoint Analysis:</span>
+                    <span class="detail-value">Presence of UCP references in robots.txt. Endpoint: https://ergodebooks.com/robots.txt; Status: 200</span>
+                </div>
+                <div class="recommendation">
+              <div class="rec-title">⚡ ACTION REQUIRED</div>
+              <p>Add the following UCP directive to <code>https://ergodebooks.com/robots.txt</code>:</p>
+              <div class="code-block">User-agent: *
+Allow: /.well-known/ucp
+UCP-Config: /.well-known/ucp</div>
+            </div>
+            </div>
+        </div>
+        <div class="component-card">
+            <div class="card-header">
+                <div class="card-title-group">
+                    <div class="icon-box">
+                        <svg class="w-6 h-6 text-green-500" fill="none" stroke="#10b981" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    </div>
+                    <div>
+                        <h3 class="card-title">UCP configuration file</h3>
+                        <div class="card-subtitle">UCP config found (valid JSON)</div>
+                    </div>
+                </div>
+                <div class="score-badge" style="background-color: #10b98115; color: #10b981;">
+                    50 / 50 pts
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="detail-row">
+                    <span class="detail-label">Endpoint Analysis:</span>
+                    <span class="detail-value">Accessibility and format of /.well-known/ucp. Endpoint: https://ergodebooks.com/.well-known/ucp; Status: 200; JSON: valid</span>
+                </div>
+                
+            </div>
+        </div>
+        <div class="component-card">
+            <div class="card-header">
+                <div class="card-title-group">
+                    <div class="icon-box">
+                        <svg class="w-6 h-6 text-red-500" fill="none" stroke="#ef4444" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </div>
+                    <div>
+                        <h3 class="card-title">UCP HTTP headers</h3>
+                        <div class="card-subtitle">No UCP-related headers detected</div>
+                    </div>
+                </div>
+                <div class="score-badge" style="background-color: #ef444415; color: #ef4444;">
+                    0 / 30 pts
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="detail-row">
+                    <span class="detail-label">Endpoint Analysis:</span>
+                    <span class="detail-value">Presence of UCP-related headers in HTTP response. Endpoint: https://ergodebooks.com; Status: 200</span>
+                </div>
+                <div class="recommendation">
+              <div class="rec-title">⚡ ACTION REQUIRED</div>
+              <p>Configure your server to send these headers on the homepage:</p>
+              <div class="code-block">UCP-Config: /.well-known/ucp
+X-Robots-Tag: UCP-Enabled</div>
+            </div>
+            </div>
+        </div>
+          </div>
+      </div>
+      
+      <div class="footer">
+          <div class="disclaimer-box">
+              <div class="disclaimer-title">Privacy &amp; data protection notice</div>
+              <p class='disclaimer-text'>GDPR alignment: This automated technical assessment is designed to follow data minimization and purpose limitation principles.</p><p class='disclaimer-text'>No data storage: The service is intended to run with zero data retention (in-memory processing only) and does not store site content or results after the PDF is generated.</p><p class='disclaimer-text'>Automated processing: The scan is fully automated and checks only publicly accessible endpoints (robots.txt, /.well-known/ucp, HTTP headers).</p><p class='disclaimer-text'>Informational use: This report is provided for informational purposes and should be complemented with your own validation.</p><p class='disclaimer-text'>Cross-border note: This assessment is executed from the Netherlands (EU) while reviewing websites hosted in other jurisdictions. The scan is limited to public technical endpoints and performed in a compliance-oriented manner.</p>
+          </div>
+          <div class="footer-meta">
+              <span>Generated by UCP Compliance Scanner v2.4</span>
+              <span>ID: 1770093642</span>
+          </div>
+      </div>
+  </div>
+</body>
+</html>
