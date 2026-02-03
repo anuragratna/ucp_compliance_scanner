@@ -109,8 +109,11 @@ INDEX_HTML = """
             const url = document.getElementById('url').value;
             
             try {
-                // Use relative path for subpath deployment support
-                const response = await fetch('scan', {
+                // Ensure we use the correct base path for subpath deployment support
+                const currentPath = window.location.pathname;
+                const basePath = currentPath.endsWith('/') ? currentPath : currentPath + '/';
+
+                const response = await fetch(basePath + 'scan', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ url })
@@ -124,8 +127,8 @@ INDEX_HTML = """
                 
                 // Success - use relative paths
                 resultsArea.classList.remove('hidden');
-                reportFrame.src = `view/${data.html_file}`;
-                downloadLink.href = `download/${data.pdf_file}`;
+                reportFrame.src = `${basePath}view/${data.html_file}`;
+                downloadLink.href = `${basePath}download/${data.pdf_file}`;
                 
             } catch (err) {
                 errorDiv.textContent = err.message;

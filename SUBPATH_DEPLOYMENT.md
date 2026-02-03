@@ -2,7 +2,7 @@
 
 Yes, you can absolutely deploy this on the same domain (`https://openquest.solutions/testAgenticReadiness`). 
 
-To do this, you typically run this Python application on a different port (e.g., `5002`) on your server and use a **Reverse Proxy** (like Nginx or Apache) to route traffic from the specific path `/testAgenticReadiness` to this application.
+To do this, you typically run this Python application on a different port (e.g., `5002`) on your server and use a **Reverse Proxy** (like Nginx or Apache) to route traffic from the specific path `/testAgenticReadiness` to this application. The application is designed to handle this automatically using relative paths.
 
 ## 1. Run the Python Application
 

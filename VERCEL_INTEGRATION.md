@@ -29,11 +29,11 @@ Now, tell Vercel to allow users to visit `/testAgenticReadiness` on your site, b
   "rewrites": [
     {
       "source": "/testAgenticReadiness",
-      "destination": "https://ucp-scanner-xyz.onrender.com/"
+      "destination": "https://ucp-compliance-scanner.onrender.com/"
     },
     {
       "source": "/testAgenticReadiness/:match*",
-      "destination": "https://ucp-scanner-xyz.onrender.com/:match*"
+      "destination": "https://ucp-compliance-scanner.onrender.com/:match*"
     }
   ]
 }
